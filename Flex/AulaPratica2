@@ -1,0 +1,19 @@
+Compilar Primeiro Codigo
+
+Não implementar a gramática!
+
+Linux apt-get install flex
+
+Trabalho 2
+
+
+
+main {}
+
+programa deve sair = "main" palavra chave reservada. "{" "}"
+
+>flex l1.l
+>gcc lex.yy.c
+>/a.out
+
+>/a.out < arquivo.txt
