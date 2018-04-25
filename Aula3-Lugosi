@@ -1,1 +1,32 @@
+Aula prática de Análise Sintática
+
+Ferramenta: javacc
+
+-Gerador automático de análisador Léxico e Sintático
+
+-Top Down
+
+Descrição da análise léxica e da gramática da linguagem -> Javacc -> Analisador Léxico e Sintático em Java
+
+
+
+
+Baixar primeiro e segundo arquivo do site
+
+terminal
+
+> javacc Lugosi.jj
+> javac *.java
+> java Lugosi teste.lug ( lug = todos arquivos Lugoci)
+
+Todas as operações aritméticas são entre ()
+
+
+
+
+Trabalho:
+Implementar toda a linguagem lugoci
+
+Fazer 3 programas que utilizam boa parte da linguagem
+
 
