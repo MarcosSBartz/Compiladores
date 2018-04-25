@@ -33,3 +33,8 @@ Dica sobre as recursões:
 
 Quando for A -> AB | vazio
 Pode resolver B*
+
+
+A->B?
+equivalente
+A-> B | vazio
