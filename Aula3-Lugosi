@@ -29,4 +29,7 @@ Implementar toda a linguagem lugoci
 
 Fazer 3 programas que utilizam boa parte da linguagem
 
+Dica sobre as recursões:
 
+Quando for A -> AB | vazio
+Pode resolver B*
