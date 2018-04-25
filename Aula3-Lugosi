@@ -34,6 +34,10 @@ Dica sobre as recursões:
 Quando for A -> AB | vazio
 Pode resolver B*
 
+A-> AB|C
+
+A->CA'
+A'->BA' | vazio
 
 A->B?
 equivalente
