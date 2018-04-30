@@ -34,7 +34,15 @@ TOKEN :
 | <ATRIB: ":=">
 | <OP: ("+" | "-" | "*" | "/" | "&&" | "||" | "<" | ">" | "==")>
 | <ID: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"])*>
-| <EXP: <APARENT> <EXP> <OP> <EXP> <
+| <EXP: <APARENT> <EXP> <OP> <EXP> <FPARENT>>
+| <TOKEN_ID: ["a"-"z","A"-"Z"](["a"-"z","A"-"Z","0"-"9"])*("_")*>
+| <TOKEN_NUMLITERAL: (["0"-"9"])+ ("."(["0"-"9"])?) ("E" ("+" | "-")? (["0"-"9"])*)?>
+| <FALSE: "false">
+| <IF: "if">
+| <DO: "do">
+| <TRUE: "true">
+| <PRINT: "print">
+
 }
 
 
@@ -63,7 +71,7 @@ void Main ():
 void VarDecl() :
 {}
 {
-	(<VAR> Tipo() <ID> <END>)?
+	(<VAR> Tipo() <TOKEN_ID> <END>)?
 }
 
 void Tipo() :
@@ -81,5 +89,12 @@ void Comandos() :
 void Exp():
 {}
 {
+	<APARENT> <ID> <OP> <ID> <FPARENT> | Fator()
 
+}
+
+void Fator():
+{}
+{
+	<ID>
 }
