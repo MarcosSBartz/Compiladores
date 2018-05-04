@@ -31,17 +31,18 @@ TOKEN :
 | <BOOL: "bool">
 | <VAR: "var">
 | <END: ";">
-| <ATRIB: ":=">
 | <OP: ("+" | "-" | "*" | "/" | "&&" | "||" | "<" | ">" | "==")>
 | <ID: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"])*>
-| <EXP: <APARENT> <EXP> <OP> <EXP> <FPARENT>>
 | <TOKEN_ID: ["a"-"z","A"-"Z"](["a"-"z","A"-"Z","0"-"9"])*("_")*>
 | <TOKEN_NUMLITERAL: (["0"-"9"])+ ("."(["0"-"9"])?) ("E" ("+" | "-")? (["0"-"9"])*)?>
 | <FALSE: "false">
 | <IF: "if">
 | <DO: "do">
+| <WHILE: "while">
+| <ATRIB: ":=">
 | <TRUE: "true">
 | <PRINT: "print">
+| <FUNCTION: "function">
 
 }
 
@@ -80,16 +81,21 @@ void Tipo() :
 	<BOOL> | <INT>
 }
 
-void Comandos() :
+void Comando():
 {}
 {
-	<ID> <ATRIB> <EXP> <END>
+      (<ID> ((<ATRIB> Exp())<END> | (<APARENTESES> (ListaExp())? <FPARENTESES>)) <END>)
+    | (<IF> <APARENTESES> Exp() <FPARENTESES> <ACHAVES> SeqComandos() <FCHAVES> <END>)
+    | (<WHILE> <APARENTESES> Exp() <FPARENTESES> <ACHAVES> SeqComandos() <FCHAVES> <END>)
+    | (<DO> <ACHAVES> SeqComandos() <FCHAVES> <WHILE> <APARENTESES> Exp() <FPARENTESES> <END>)
+    | (<RETURN> Exp() <END>)
+    | (<PRINT> <APARENTESES> Exp() <FPARENTESES> <END>)
 }
 
 void Exp():
 {}
 {
-	<APARENT> <ID> <OP> <ID> <FPARENT> | Fator()
+	<APARENT> Exp() <OP> Exp() <FPARENT> | Fator()
 
 }
 
@@ -97,4 +103,16 @@ void Fator():
 {}
 {
 	<ID>
+}
+
+void Func():
+{}
+{
+	(<FUNCTION> Tipo() <TOKEN_ID> <APARENT> (ListaArg())? <FPARENT> <ACHAVES> VarDecl() SeqComandos() <FCHAVES<)+
+}
+
+void ListaArg():
+{}
+{
+	Tipo() <TOKEN_ID> ()
 }
