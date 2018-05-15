@@ -3,7 +3,7 @@ import java.io.*;
 public class Lugosi {
 
   public static void main(String args[]) throws ParseException,IOException {
-    
+
     Lugosi parser = new Lugosi(new FileInputStream(args[0]));
     parser.Lugosi();
   }
@@ -30,11 +30,9 @@ TOKEN :
 | <INT: "int">
 | <BOOL: "bool">
 | <VAR: "var">
-| <END: ";">
+| <PONTOVIRGULA: ";">
+| <VIRGULA: ",">
 | <OP: ("+" | "-" | "*" | "/" | "&&" | "||" | "<" | ">" | "==")>
-| <ID: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"])*>
-| <TOKEN_ID: ["a"-"z","A"-"Z"](["a"-"z","A"-"Z","0"-"9"])*("_")*>
-| <TOKEN_NUMLITERAL: (["0"-"9"])+ ("."(["0"-"9"])?) ("E" ("+" | "-")? (["0"-"9"])*)?>
 | <FALSE: "false">
 | <IF: "if">
 | <DO: "do">
@@ -43,76 +41,101 @@ TOKEN :
 | <TRUE: "true">
 | <PRINT: "print">
 | <FUNCTION: "function">
+| <RETURN: "return">
 
 }
 
-
-void Lugosi () :
-{}
-{ 
-
-  Main() 
-//Func()?
-  <EOF> 
+TOKEN :
+{
+  <ID: ["a"-"z","A"-"Z"] (["a"-"z","A"-"Z","0"-"9"])* ("_"(["a"-"z","A"-"Z","0"-"9"])+)?>
+| <NUMERAL: (["0"-"9"])+("."(["0"-"9"])+)?>
 }
-	
+
 
 void Main ():
 {}
 {
- <MAIN> <ACHAVES> 
- 
+ <MAIN> <ACHAVES>
+
  VarDecl()
- // SeqComandos()
+ SeqComandos()
 
  <FCHAVES>
 
 }
 
-void VarDecl() :
+void SeqComandos():
 {}
 {
-	(<VAR> Tipo() <TOKEN_ID> <END>)?
-}
-
-void Tipo() :
-{}
-{
-	<BOOL> | <INT>
-}
+  (Comando())*
+}```````
 
 void Comando():
 {}
 {
-      (<ID> ((<ATRIB> Exp())<END> | (<APARENTESES> (ListaExp())? <FPARENTESES>)) <END>)
-    | (<IF> <APARENTESES> Exp() <FPARENTESES> <ACHAVES> SeqComandos() <FCHAVES> <END>)
-    | (<WHILE> <APARENTESES> Exp() <FPARENTESES> <ACHAVES> SeqComandos() <FCHAVES> <END>)
-    | (<DO> <ACHAVES> SeqComandos() <FCHAVES> <WHILE> <APARENTESES> Exp() <FPARENTESES> <END>)
-    | (<RETURN> Exp() <END>)
-    | (<PRINT> <APARENTESES> Exp() <FPARENTESES> <END>)
+  (
+      (<ID> ((<ATRIB> Exp()) | (<APARENT> (ListaExp())? <FPARENT>)))
+    | (<IF> <APARENT> Exp() <FPARENT> <ACHAVES> SeqComandos() <FCHAVES>)
+    | (<WHILE> <APARENT> Exp() <FPARENT> <ACHAVES> SeqComandos() <FCHAVES>)
+    | (<DO> <ACHAVES> SeqComandos() <FCHAVES> <WHILE> <APARENT> Exp() <FPARENT>)
+    | (<PRINT> <APARENT> Exp() <FPARENT>)
+    | (<RETURN> Exp())
+  )
+  <PONTOVIRGULA>
 }
 
-void Exp():
+void Func ():
 {}
 {
-	<APARENT> Exp() <OP> Exp() <FPARENT> | Fator()
 
-}
+  (<FUNCTION> Tipo() <ID> <APARENT> (ListaArg())? <FPARENT> <ACHAVES> VarDecl() SeqComandos() <FCHAVES>)+
 
-void Fator():
-{}
-{
-	<ID>
-}
-
-void Func():
-{}
-{
-	(<FUNCTION> Tipo() <TOKEN_ID> <APARENT> (ListaArg())? <FPARENT> <ACHAVES> VarDecl() SeqComandos() <FCHAVES<)+
 }
 
 void ListaArg():
 {}
 {
-	Tipo() <TOKEN_ID> ()
+  Tipo() <ID> (<VIRGULA> Tipo() <ID>)*
+}
+
+void Exp():
+{}
+{
+  (<APARENT> Exp() <OP> Exp() <FPARENT>) | Fator()
+}
+
+void Fator():
+{}
+{
+    (<ID> (<APARENT> (ListaExp())?  <FPARENT>)?)
+  | <NUMERAL>
+  | <TRUE>
+  | <FALSE>
+}
+
+void ListaExp():
+{}
+{
+  Exp() (<VIRGULA> Exp())*
+}
+
+void Tipo():
+{}
+{
+  (<INT>|<BOOL>)
+}
+
+void VarDecl():
+{}
+{
+  (<VAR> Tipo() <ID> <PONTOVIRGULA>)*
+}
+
+void Lugosi () :
+{}
+{
+
+  Main()
+  (Func())?
+  <EOF>
 }
