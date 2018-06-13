@@ -1,0 +1,40 @@
+
+
+
+exemplo : yall | bison
+
+Linha -> Expr \n
+
+Expr -> Expr + Termo | Termo
+
+
+para executar:
+bison g.y
+
+gcc g.tab.c
+
+./a.out 
+3+2
+
+
+
+baixar tradução.jj
+
+? = expressao ou vazio
+
+entre chaves = açoes semanticas, qualquer codigo em java
+
+executar Tradução:
+
+javacc Traducao.jj
+javac *.java
+
+java Traducao
+
+
+
+Baixar pretty printer
+
+E -> Num | Soma
+
+Som -> (E+E)
