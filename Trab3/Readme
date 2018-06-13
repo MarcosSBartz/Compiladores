@@ -38,3 +38,51 @@ Baixar pretty printer
 E -> Num | Soma
 
 Som -> (E+E)
+
+
+
+Trabalho:
+
+Fazer o que o pretty printer faz em lugosi
+
+Fazer isso em outra linguagem
+
+Dica: Classes apropriadas que 
+
+
+Parser da linguagem ja esta pronto
+entao deve ser feito a arvore sintatica
+aquele Abrax
+
+
+CRIAR CLASSE LUGOSI NA NOVA LINGUAGEM
+QUE REPRESENTA UMA LINGUAGEM INTEIRA
+= MAIN SEGUIDO DE FUNC?
+
+
+
+
+CODIGO PARA COLOCAR NO ARQUIVO
+
+class Lugosi {
+  Main main;
+  Arraylist<Func> Funcs;
+  }
+  
+class Main {
+  Arraylist<VarDecl> VarDecls;
+  Arraylist<Comando> Comandos;
+  }
+  
+class Vardecl {
+  String id;
+  Tipo tipo;
+  }
+  
+  class Tipo{}
+  class Int extends TIpo{}
+  class Bool extends Tipo{}
+
+
+
+
